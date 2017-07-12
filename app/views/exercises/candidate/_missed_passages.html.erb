@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+	<div class="panel-heading app-exercise-head">
+		<div class="app-exercise-header">
+			<%= content_tag(:span, exercise.title) %>
+		</div>
+	</div>
+	<div class="panel-body">
+			<%= render :partial => 'exercises/common/content', locals: {exercise: exercise} %>
+		<div class="app-exercise-options">
+			<div class="app-exercise-info">
+				<span class="app-exercise-info-item"> <i class="fa fa-users" aria-hidden="true"></i><%= exercise.responses.count %> </span>
+			</div>
+			<div class="app-exercise-actions">
+				<%= button_to 'View all responses', passage_responses_path(exercise), method: :get, class: 'btn btn-info pull-right'%>
+			</div>
+		</div>
+	</div>
+</div>

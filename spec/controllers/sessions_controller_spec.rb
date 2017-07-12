@@ -8,11 +8,11 @@ describe SessionsController, type: :controller do
   end
   describe 'GET #new' do
     context 'When user is logged_in' do
-      it 'redirects to passages path' do
+      it 'redirects to exercises path' do
         stub_logged_in(true)
 
         get :new
-        expect(response).to redirect_to(passages_path)
+        expect(response).to redirect_to(exercises_path)
       end
     end
 
@@ -39,7 +39,7 @@ describe SessionsController, type: :controller do
 
         session = controller.session
 
-        expect(response).to redirect_to(passages_path)
+        expect(response).to redirect_to(exercises_path)
         expect(session[:user_id]).to eql(12_234)
         expect(session[:user_name]).to eql('first_name last_name')
         expect(session[:user_image_url]).to eql('https://something.com/profile_picture')
@@ -60,7 +60,7 @@ describe SessionsController, type: :controller do
 
         session = controller.session
 
-        expect(response).to redirect_to(passages_path)
+        expect(response).to redirect_to(exercises_path)
         expect(session[:user_id]).to eql(12_235)
         expect(session[:user_name]).to eql('new user first_name last_name')
         expect(session[:user_image_url]).to eql('https://something.com/new_user_profile_picture')

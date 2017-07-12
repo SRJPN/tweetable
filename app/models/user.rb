@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   has_many :responses
   has_many :user_groups
-  has_many :passages, through: :responses
+  has_many :exercises, through: :responses
   has_many :tags, through: :responses
 
   def update_if_changed(user_params)

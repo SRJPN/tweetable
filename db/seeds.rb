@@ -7,11 +7,11 @@ climate change, a pair of scientists from UCLA has done a careful analysis of th
 existing North Sea Passage (NSR). These developments may greatly reduce the time and cost
 of shipping but would also lead to unforeseen economic and geopolitical complications.'.freeze
 
-person_passage = 'This passage was very moving to me. The story finally comes full circle,
+person_passage = 'This exercise was very moving to me. The story finally comes full circle,
 and Amir is able to come to terms with himself. I think that the fact that he quoted Hassan
  when Hassan went to run his winning kite shows that Amir realizes now how incredibly
 important he was to Hassan, because he now feels the same about Hassan’s son, Sohrab.
- What do you think this passage means for Amir and Sohrab’s relationship in the future?
+ What do you think this exercise means for Amir and Sohrab’s relationship in the future?
 Do you think Amir would love Sohrab equally and/or in the same way that he would love his own
 biological son? Why?'.freeze
 
@@ -66,7 +66,7 @@ unless Rails.env.production?
 
 # --------------- Passage Seeds ---------------------
 
-  Passage.create(
+  Exercise.create(
       [
           {
               title: 'Climate Change', text: climate_change_passage, commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600'
@@ -87,8 +87,8 @@ unless Rails.env.production?
       ]
   )
 
-  Passage.new(title: 'News', text: 'news passage', commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
-  Passage.new(title: 'Class', text: 'class passage', commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
+  Exercise.new(title: 'News', text: 'news exercise', commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
+  Exercise.new(title: 'Class', text: 'class exercise', commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
 
 
 # --------------- Response Seeds ---------------------
@@ -96,19 +96,19 @@ unless Rails.env.production?
   Response.create(
       [
           {
-              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132271').id, passage_id: Passage.find_by(title: 'Climate Change').id
+              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132271').id, exercise_id: Exercise.find_by(title: 'Climate Change').id
           },
           {
-              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132273').id, passage_id: Passage.find_by(title: 'Climate Change').id
+              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'Climate Change').id
           },
           {
-              text: "respose for Person", user_id: User.find_by(auth_id: '132271').id, passage_id: Passage.find_by(title: 'Person').id
+              text: "respose for Person", user_id: User.find_by(auth_id: '132271').id, exercise_id: Exercise.find_by(title: 'Person').id
           },
           {
-              text: "respose for Person", user_id: User.find_by(auth_id: '132273').id, passage_id: Passage.find_by(title: 'Person').id
+              text: "respose for Person", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'Person').id
           },
           {
-              text: "News Response", user_id: User.find_by(auth_id: '132273').id, passage_id: Passage.find_by(title: 'News').id
+              text: "News Response", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'News').id
           }
       ]
   )

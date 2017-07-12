@@ -1,0 +1,44 @@
+
+<div class="panel panel-default">
+	<div class="panel-heading app-exercise-head">
+		<div class="app-exercise-header">
+			<%= content_tag(:span, exercise.title) %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<%= render :partial => 'exercises/common/content', locals: {exercise: exercise} %>
+		<div class="app-exercise-options">
+			<div class="app-exercise-info">
+				<%= render :partial => 'exercises/admin/duration', locals: {exercise: exercise} %>
+				<%= render :partial => 'exercises/admin/commences', locals: {exercise: exercise, name: 'Commences on'} %>
+				<%= render :partial => 'exercises/admin/concludes', locals: {exercise: exercise, name: 'Concludes on'} %>
+				<span class="app-exercise-info-item"> <i class="fa fa-users" aria-hidden="true"></i><%= exercise.responses.count %> </span>
+			</div>
+			<div class="app-exercise-actions">
+				<a href="#" class="btn btn-danger pull-right" data-toggle="modal" data-target="#app-conclude-confirmation-<%= exercise.id %>">Conclude</a>
+				<!--<%= content_tag(:a, 'Conclude', href: conclude_passage_path(exercise.id), class: 'btn btn-danger pull-right') %>-->
+				<%= content_tag(:a, 'Review', href: passage_responses_path(exercise.id), class: 'btn btn-info pull-right') %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" id="app-conclude-confirmation-<%= exercise.id %>" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Confirmation</h4>
+			</div>
+			<%= bootstrap_form_for(exercise, :url => conclude_passage_path(exercise.id), method: :get) do |form| %>
+					<div class="modal-body">
+						<p>The exercise will be concluded for candidates right now. No one can attempt this exercise anymore. Click on OK to
+							continue...</p>
+					</div>
+					<div class="modal-footer">
+						<%= submit_tag('Ok', class: 'btn btn-success') %>
+					</div>
+			<% end %>
+		</div>
+	</div>
+</div>

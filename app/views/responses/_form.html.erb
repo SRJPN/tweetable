@@ -1,17 +1,17 @@
-<%= form_for([passage, response], method: 'post', html: {class: 'form-inline text-center'}) do %>
+<%= form_for([exercise, response], method: 'post', html: {class: 'form-inline text-center'}) do %>
 		<div class="row">
 			<div class="form-group col-sm-12">
 				<%= hidden_field_tag 'user_id', user.id %>
 				<%= text_area_tag 'text', nil, placeholder: 'Tweet here', maxlength: 140, class: 'form-control', id: 'text' %>
 			</div>
 			<div class="col-sm-12 app-response-btn-holder">
-				<button type="button" class="btn btn-primary app-response-submission pull-right " data-toggle="modal" data-target="#app-confirm-passage-<%= passage.id %>-response">Submit</button>
-				<%= button_to 'Back', passages_path, class: 'btn btn-primary hidden back-btn pull-right', method: :get %>
+				<button type="button" class="btn btn-primary app-response-submission pull-right " data-toggle="modal" data-target="#app-confirm-exercise-<%= exercise.id %>-response">Submit</button>
+				<%= button_to 'Back', exercises_path, class: 'btn btn-primary hidden back-btn pull-right', method: :get %>
 				<div class="pull-right app-total-chars">
 					<span class="count" id="app-total-chars">140</span></span>
 				</div>
 			</div>
-			<div class="modal fade bd-example-modal-sm" id="app-confirm-passage-<%= passage.id %>-response" role="dialog">
+			<div class="modal fade bd-example-modal-sm" id="app-confirm-exercise-<%= exercise.id %>-response" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">

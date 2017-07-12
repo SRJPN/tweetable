@@ -3,13 +3,13 @@
 require 'after_the_deadline'
 
 class EvaluationEngine
-  def evaluate(passage, response)
-    dict = create_dict passage
+  def evaluate(exercise, response)
+    dict = create_dict exercise
     AfterTheDeadline(dict, nil)
     AfterTheDeadline.check response
   end
 
-  def create_dict(passage)
-    passage.split(' ')
+  def create_dict(exercise)
+    exercise.split(' ')
   end
 end

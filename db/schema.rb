@@ -10,24 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622043742) do
+ActiveRecord::Schema.define(version: 20170711182333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "groups", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "passages", force: :cascade do |t|
+  create_table "exercises", force: :cascade do |t|
     t.string "title"
     t.string "text"
     t.datetime "commence_time"
     t.datetime "conclude_time"
     t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170622043742) do
 
   create_table "responses", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "passage_id"
+    t.integer "exercise_id"
     t.string "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -49,10 +49,10 @@ ActiveRecord::Schema.define(version: 20170622043742) do
 
   create_table "responses_trackings", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "passage_id"
+    t.bigint "exercise_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["passage_id"], name: "index_responses_trackings_on_passage_id"
+    t.index ["exercise_id"], name: "index_responses_trackings_on_exercise_id"
     t.index ["user_id"], name: "index_responses_trackings_on_user_id"
   end
 
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20170622043742) do
     t.string "email"
   end
 
-  add_foreign_key "responses_trackings", "passages"
+  add_foreign_key "responses_trackings", "exercises"
   add_foreign_key "responses_trackings", "users"
   add_foreign_key "user_groups", "groups"
   add_foreign_key "user_groups", "users"

@@ -1,0 +1,136 @@
+.app-exercise-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-exercise-actions {
+  display: flex;
+  align-items: center;
+  a, button {
+    margin-left: 10px;
+    &.fa {
+      color: #337ab7;
+    }
+  }
+  button {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.panel-body {
+  display: flex;
+  div.app-exercise-options {
+    padding: 10px;
+    border-left: 1px dotted lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .app-exercise-info {
+      display: flex;
+      flex-direction: column;
+      .app-exercise-info-item {
+        margin-bottom: 5px;
+        color: rgba(0, 0, 0, 0.6);
+        .fa {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $responsive) {
+    flex-direction: column;
+    div.app-exercise-options {
+      border-top: 1px dotted lightgray;
+      border-left: none;
+    }
+  }
+}
+
+.app-exercise-actions a {
+  margin-right: 20px;
+}
+
+.app-empty-exercise p {
+  margin: 0 10px 27px 0;
+  border: 1px dashed lightgray;
+}
+
+.app-new-exercise-container {
+  padding-bottom: 50px;
+  .app-duration-limit {
+    .bdp-input {
+      display: flex;
+      .bdp-block {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.morecontent span {
+  display: none;
+}
+
+.morelink {
+  display: block;
+}
+
+.justify {
+  text-align: justify;
+  padding-right: 15px;
+}
+
+.empty-message {
+  font-family: sans-serif;
+  color: lightgrey;
+  font-size: 50px;
+  margin-top: 25%;
+}
+
+.field-tip {
+  position: relative;
+  cursor: help;
+}
+
+.field-tip .tip-content {
+  position: absolute;
+  top: -10px; /* - top padding */
+  right: 9999px;
+  width: 200px;
+  margin-right: -190px; /* width + left/right padding */
+  padding: 10px;
+  padding-bottom: 0px;
+  border-radius: 10px;
+  color: #000;
+  z-index: 10000;
+  background: #f5f5f5;
+  -webkit-box-shadow: 2px 2px 5px #aaa;
+  -moz-box-shadow: 2px 2px 5px #aaa;
+  box-shadow: 2px 2px 5px #aaa;
+  opacity: 0;
+  -webkit-transition: opacity 250ms ease-out;
+  -moz-transition: opacity 250ms ease-out;
+  -ms-transition: opacity 250ms ease-out;
+  -o-transition: opacity 250ms ease-out;
+  transition: opacity 250ms ease-out;
+}
+
+/* <http://css-tricks.com/snippets/css/css-triangle/> */
+.field-tip .tip-content:before {
+  content: ' '; /* Must have content to display */
+  position: absolute;
+  top: 50%;
+  left: -16px; /* 2 x border width */
+  width: 0;
+  height: 0;
+  margin-top: -8px; /* - border width */
+  border: 8px solid transparent;
+  border-right-color: #f5f5f5;
+  z-index: 10000;
+}
+
+.field-tip:hover .tip-content {
+  right: -20px;
+  opacity: 1;
+}

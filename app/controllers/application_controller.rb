@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clearance
-    return redirect_to passages_path if current_user.active
+    return redirect_to exercises_path if current_user.active
     render 'shared/clearance', layout: false
   end
 

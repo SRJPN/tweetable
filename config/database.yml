@@ -12,7 +12,7 @@ default: &default
 
 development:
   <<: *default
-  database: tweetable_development
+  database: my_tweetable_development
   username: <% ENV['USER'] %>
 
 # Warning: The database defined as "test" will be erased and
@@ -20,7 +20,7 @@ development:
 # Do not set this db to the same as development or production.
 test: &test
   <<: *default
-  database: tweetable_test
+  database: my_tweetable_test
   username: <% ENV['USER'] %>
 
 production:

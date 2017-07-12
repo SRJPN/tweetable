@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+	<div class="panel-heading app-exercise-head">
+		<div class="app-exercise-header">
+			<%= content_tag(:span, exercise.title) %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<div class="app-empty-exercise app-content col-sm-9">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+		</div>
+		<div class="app-exercise-options">
+			<div class="app-exercise-info">
+				<%= render :partial => 'exercises/admin/duration', locals: {exercise: exercise} %>
+				<%= render :partial => 'exercises/admin/concludes', locals: {exercise: exercise, name: 'Concludes on'} %>
+				<span class="app-exercise-info-item"> <i class="fa fa-users" aria-hidden="true"></i><%= exercise.responses.count %> </span>
+			</div>
+			<div class="app-exercise-actions">
+				<%= button_to 'Attempt', new_exercise_response_path(exercise), method: :get, class: 'btn btn-success pull-right'%>
+			</div>
+		</div>
+	</div>
+</div>

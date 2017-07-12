@@ -1,0 +1,49 @@
+<div class="panel panel-default">
+	<div class="panel-heading app-exercise-head">
+		<div class="app-exercise-header">
+			<%= content_tag(:span, exercise.title) %>
+		</div>
+		<div class="app-exercise-actions">
+			<a href="<%= edit_exercise_path(exercise.id) %>" class="fa fa-edit"></a>
+			<%= form_tag(passage_path(exercise.id), :method => :delete, :class => 'internal') do %>
+					<button type="submit" class="fa fa-trash pull-right button_with_delete_icon"></button>
+			<% end %>
+		</div>
+	</div>
+	<div class="panel-body">
+		<%= render :partial => 'exercises/common/content', locals: {exercise: exercise} %>
+		<div class="app-exercise-options">
+			<div class="app-exercise-info">
+				<%= render :partial => 'exercises/admin/duration', locals: {exercise: exercise} %>
+				<%= render :partial => 'exercises/admin/commences', locals: {exercise: exercise, name: 'Commences on'} %>
+				<%= render :partial => 'exercises/admin/concludes', locals: {exercise: exercise, name: 'Concludes on'} %>
+			</div>
+			<div class="app-exercise-actions">
+				<a href="#" class="btn btn-success pull-right" data-toggle="modal" data-target="#app-commence-confirmation-<%= exercise.id %>">Commence</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade bd-example-modal-sm" id="app-commence-confirmation-<%= exercise.id %>" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Confirmation</h4>
+			</div>
+			<%= bootstrap_form_for(exercise, :url => commence_passage_path(exercise.id), method: :put) do |form| %>
+					<div class="modal-body">
+						<%= form.datetime_field :conclude_time, :class => "col-10 form-control", :value => (Time.current+2.days).strftime("%Y-%m-%dT%H:%M"), required: true %>
+						<p>The exercise will be open for candidates right now. Check the closing date and click on OK to
+							continue...</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+						<%= submit_tag('Ok', class: 'btn btn-success') %>
+					</div>
+			<% end %>
+		</div>
+	</div>
+</div>

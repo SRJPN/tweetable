@@ -21,7 +21,7 @@
 //= require thirdparty_js/bootstrap-tagsinput
 //= require thirdparty_js/bootstrap-duration-picker
 //= require thirdparty_js/jquery.countdown.min
-//= require passages
+//= require exercises.js
 //= require response
 //= require side_nav_bar
 //= require tags

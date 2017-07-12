@@ -3,31 +3,31 @@
 describe ResponsesTracking do
   describe 'validations ' do
     it { should validate_presence_of(:user_id) }
-    it { should validate_presence_of(:passage_id) }
+    it { should validate_presence_of(:exercise_id) }
   end
 
   describe 'associations' do
     it { should belong_to(:user) }
-    it { should belong_to(:passage) }
+    it { should belong_to(:exercise) }
   end
 
-  let(:passages) do
+  let(:exercises) do
     [
       {
-        title: 'Climate Change', text: 'climate change passage', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
       },
 
       {
-        title: 'Person', text: 'person passage', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        title: 'Person', text: 'person exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
       },
       {
-        title: 'Program', text: 'program passage', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        title: 'Program', text: 'program exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
       },
       {
-        title: 'Computer', text: 'computer passage', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
+        title: 'Computer', text: 'computer exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
       },
       {
-        title: 'Human', text: 'human passage', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        title: 'Human', text: 'human exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
       }
     ]
   end
@@ -48,19 +48,19 @@ describe ResponsesTracking do
 
   before(:each) do
     @users = User.create(users)
-    @passages = Passage.create(passages)
+    @exercises = Exercise.create(exercises)
   end
 
   after(:each) do
     ResponsesTracking.delete_all
     @users.each(&:delete)
-    @passages.each(&:delete)
+    @exercises.each(&:delete)
   end
 
   describe 'remaining_time' do
-    context 'when the candidate has not taken the passage yet' do
-      it 'should save the start time of the ongoing response session for the passage' do
-        remaining_time = ResponsesTracking.remaining_time(@passages.first.id, @users.first.id)
+    context 'when the candidate has not taken the exercise yet' do
+      it 'should save the start time of the ongoing response session for the exercise' do
+        remaining_time = ResponsesTracking.remaining_time(@exercises.first.id, @users.first.id)
 
         expect(remaining_time.round).to eq(86_400)
       end
@@ -68,46 +68,46 @@ describe ResponsesTracking do
     context 'when the candidate has started the test and not yet completed' do
       it 'should give remaining time from the time the test started' do
         time = (Time.current - 0.5.day)
-        ResponsesTracking.create(passage_id: @passages.first.id, user_id: @users.first.id, created_at: time, updated_at: time)
-        expected_remaining_time = ResponsesTracking.remaining_time(@passages.first.id, @users.first.id)
+        ResponsesTracking.create(exercise_id: @exercises.first.id, user_id: @users.first.id, created_at: time, updated_at: time)
+        expected_remaining_time = ResponsesTracking.remaining_time(@exercises.first.id, @users.first.id)
 
         expect(expected_remaining_time.round).to be(43_200)
       end
       it 'should give remaining time 0 if the duration has ended' do
         time = (Time.current - 1.day)
-        ResponsesTracking.create(passage_id: @passages.first.id, user_id: @users.first.id, created_at: time, updated_at: time)
-        expected_remaining_time = ResponsesTracking.remaining_time(@passages.first.id, @users.first.id)
+        ResponsesTracking.create(exercise_id: @exercises.first.id, user_id: @users.first.id, created_at: time, updated_at: time)
+        expected_remaining_time = ResponsesTracking.remaining_time(@exercises.first.id, @users.first.id)
 
         expect(expected_remaining_time.round).to be(0)
       end
-      it 'should give remaining time to conclude time if the passage closing time is less than duration' do
+      it 'should give remaining time to conclude time if the exercise closing time is less than duration' do
         time = (Time.current + 1.98.day)
-        passage = @passages.second
-        ResponsesTracking.create(passage_id: passage.id, user_id: @users.first.id, created_at: time, updated_at: time)
-        expected_remaining_time = ResponsesTracking.remaining_time(passage.id, @users.first.id)
+        exercise = @exercises.second
+        ResponsesTracking.create(exercise_id: exercise.id, user_id: @users.first.id, created_at: time, updated_at: time)
+        expected_remaining_time = ResponsesTracking.remaining_time(exercise.id, @users.first.id)
 
         expect(expected_remaining_time.round).to be(172_800)
       end
       it 'should give remaining time 0 if the response has been submitted' do
-        ResponsesTracking.create(passage_id: @passages.fifth.id, user_id: @users.first.id, created_at: (Time.current + 1.98))
-        ResponsesTracking.update_end_time(@passages.fifth.id, @users.first.id)
-        expected_remaining_time = ResponsesTracking.remaining_time(@passages.fifth.id, @users.first.id)
+        ResponsesTracking.create(exercise_id: @exercises.fifth.id, user_id: @users.first.id, created_at: (Time.current + 1.98))
+        ResponsesTracking.update_end_time(@exercises.fifth.id, @users.first.id)
+        expected_remaining_time = ResponsesTracking.remaining_time(@exercises.fifth.id, @users.first.id)
 
         expect(expected_remaining_time.round).to be(0)
       end
     end
-    context 'when the duration of the passage id zero' do
+    context 'when the duration of the exercise id zero' do
       it 'should give the remaining time as the duration till conculde time' do
-        passage = @passages.fourth
+        exercise = @exercises.fourth
         user = @users.first
-        expected_remaining_time = ResponsesTracking.remaining_time(passage.id, user.id)
+        expected_remaining_time = ResponsesTracking.remaining_time(exercise.id, user.id)
         expect(expected_remaining_time.round).to be(172_800)
       end
       it 'should give remaining time 0 if the response has been submitted' do
-        passage = @passages.fourth
-        ResponsesTracking.create(passage_id: passage.id, user_id: @users.first.id, created_at: (Time.current + 1.98))
-        ResponsesTracking.update_end_time(passage.id, @users.first.id)
-        expected_remaining_time = ResponsesTracking.remaining_time(passage.id, @users.first.id)
+        exercise = @exercises.fourth
+        ResponsesTracking.create(exercise_id: exercise.id, user_id: @users.first.id, created_at: (Time.current + 1.98))
+        ResponsesTracking.update_end_time(exercise.id, @users.first.id)
+        expected_remaining_time = ResponsesTracking.remaining_time(exercise.id, @users.first.id)
 
         expect(expected_remaining_time.round).to be(0)
       end

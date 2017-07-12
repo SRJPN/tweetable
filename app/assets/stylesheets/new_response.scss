@@ -1,6 +1,6 @@
 .app-new-response-container {
   padding-right: 20px;
-  .app-response-timer, .app-passage-container {
+  .app-response-timer, .app-exercise-container {
     background-color: white;
     box-shadow: 1px 1px 1px lightgrey;
     padding: 10px;
@@ -26,7 +26,7 @@
     }
   }
 
-  .app-passage-container {
+  .app-exercise-container {
     padding: 10px 40px 10px 40px;
     .form-group {
       display: flex;
@@ -43,7 +43,7 @@
       font-weight: bold;
       padding: 0;
     }
-    .header, .app-passage-text {
+    .header, .app-exercise-text {
       border-bottom: 2px solid lightgray;
       margin-top: 20px;
       margin-bottom: 20px;

@@ -27,21 +27,21 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :passages do
+  resources :exercises do
     resources :responses
 
     collection do
-      get 'drafts', to: 'passages#drafts'
-      get 'ongoing', to: 'passages#ongoing'
-      get 'concluded', to: 'passages#concluded'
-      get 'commenced', to: 'passages#commenced'
-      get 'missed', to: 'passages#missed'
-      get 'attempted', to: 'passages#attempted'
+      get 'drafts', to: 'exercises#drafts'
+      get 'ongoing', to: 'exercises#ongoing'
+      get 'concluded', to: 'exercises#concluded'
+      get 'commenced', to: 'exercises#commenced'
+      get 'missed', to: 'exercises#missed'
+      get 'attempted', to: 'exercises#attempted'
     end
 
     member do
-      put 'commence', to: 'passages#commence'
-      get 'conclude', to: 'passages#conclude'
+      put 'commence', to: 'exercises#commence'
+      get 'conclude', to: 'exercises#conclude'
     end
   end
 

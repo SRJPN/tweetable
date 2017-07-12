@@ -6,7 +6,7 @@ class EvaluatorJob
     job = queue.fetch
     return if job.nil?
 
-    # get response text and passage text
+    # get response text and exercise text
     response_text = job.response_text
     passage_text = job.passage_text
 

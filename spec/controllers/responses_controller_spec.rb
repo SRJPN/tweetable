@@ -2,35 +2,35 @@
 
 describe ResponsesController, type: :controller do
   describe 'GET #new' do
-    let(:passage) { Passage.new(id: 1) }
+    let(:exercise) { Exercise.new(id: 1) }
 
     before(:each) do
       stub_logged_in(true)
       stub_current_user_with_attributes(admin: false, id: 1, active: true)
     end
 
-    context 'When passage id exists' do
+    context 'When exercise id exists' do
       it 'renders the new template' do
-        expect(Passage).to receive(:find).and_return(passage)
+        expect(Exercise).to receive(:find).and_return(exercise)
         expect(ResponsesTracking).to receive(:remaining_time).and_return(6000)
 
-        get :new, params: { passage_id: passage.id }
+        get :new, params: { exercise_id: exercise.id }
 
         expect(response).to render_template(:new)
       end
     end
 
-    context 'When passage does not exists' do
+    context 'When exercise does not exists' do
       it 'renders the new template' do
         stub_logged_in(true)
-        get :new, params: { passage_id: passage.id }
-        expect(response).to redirect_to(passages_path)
+        get :new, params: { exercise_id: exercise.id }
+        expect(response).to redirect_to(exercises_path)
       end
     end
   end
 
   describe 'Post #create' do
-    let(:passage) { double('passage', id: 'passage_id', title: 'Test passage title', text: 'Test passage text', duration: 1) }
+    let(:exercise) { double('exercise', id: 'exercise_id', title: 'Test exercise title', text: 'Test exercise text', duration: 1) }
     let(:intern) { double('intern', id: 'user_id', name: 'Intern', auth_id: 'auth_id', admin: false, active: true) }
 
     before(:each) do
@@ -38,15 +38,15 @@ describe ResponsesController, type: :controller do
       stub_current_user(intern)
     end
 
-    context 'When user and passage exists' do
+    context 'When user and exercise exists' do
       context 'When Responding time is over' do
         context 'Response length is valid' do
           it 'should create  response' do
             expect(ResponsesTracking).to receive(:remaining_time).and_return(0)
-            expect(Passage).to receive(:find).and_return(passage)
+            expect(Exercise).to receive(:find).and_return(exercise)
 
-            post :create, params: { passage_id: passage.id, user_id: intern.id, text: 'Response to test passage' }
-            expect(response).to redirect_to(passages_path)
+            post :create, params: { exercise_id: exercise.id, user_id: intern.id, text: 'Response to test exercise' }
+            expect(response).to redirect_to(exercises_path)
             expect(flash[:danger]).to match('Sorry, Your response submission time is expired!')
           end
         end
@@ -54,10 +54,10 @@ describe ResponsesController, type: :controller do
         context 'Response length is invalid' do
           it 'should not create  response' do
             expect(ResponsesTracking).to receive(:remaining_time).and_return(-1)
-            expect(Passage).to receive(:find).and_return(passage)
+            expect(Exercise).to receive(:find).and_return(exercise)
 
-            post :create, params: { passage_id: passage.id, user_id: intern.id, text: 'This is an invalid response because its contains more that 140 characters. This is an invalid response because its contains more that 140 chars.' }
-            expect(response).to redirect_to(passages_path)
+            post :create, params: { exercise_id: exercise.id, user_id: intern.id, text: 'This is an invalid response because its contains more that 140 characters. This is an invalid response because its contains more that 140 chars.' }
+            expect(response).to redirect_to(exercises_path)
             expect(flash[:danger]).to match('Sorry, Your response submission time is expired!')
           end
         end
@@ -70,12 +70,12 @@ describe ResponsesController, type: :controller do
           it 'should create  response' do
             expect(ResponsesTracking).to receive(:update_end_time)
             expect(ResponsesTracking).to receive(:remaining_time).and_return(2)
-            expect(Passage).to receive(:find).and_return(passage)
+            expect(Exercise).to receive(:find).and_return(exercise)
             expect(Response).to receive(:new).and_return(response)
             expect(response).to receive(:save).and_return(true)
 
-            post :create, params: { passage_id: passage.id, user_id: intern.id, text: 'Response to test passage' }
-            expect(response).to redirect_to(passages_path)
+            post :create, params: { exercise_id: exercise.id, user_id: intern.id, text: 'Response to test exercise' }
+            expect(response).to redirect_to(exercises_path)
             expect(flash[:success]).to match('Your response was successfully recorded.')
           end
         end
@@ -83,13 +83,13 @@ describe ResponsesController, type: :controller do
         context 'Response length is invalid' do
           it 'should not create  response' do
             expect(ResponsesTracking).to receive(:remaining_time).and_return(2)
-            expect(Passage).to receive(:find).and_return(passage)
-            expect(Passage).to receive(:find).and_return(passage)
+            expect(Exercise).to receive(:find).and_return(exercise)
+            expect(Exercise).to receive(:find).and_return(exercise)
             expect(Response).to receive(:new).and_return(response)
             expect(response).to receive(:save).and_return(false)
 
-            post :create, params: { passage_id: passage.id, user_id: intern.id, text: 'This is an invalid response because its contains more that 140 characters. This is an invalid response because its contains more that 140 chars.' }
-            expect(response).to redirect_to(new_passage_response_path(passage))
+            post :create, params: { exercise_id: exercise.id, user_id: intern.id, text: 'This is an invalid response because its contains more that 140 characters. This is an invalid response because its contains more that 140 chars.' }
+            expect(response).to redirect_to(new_exercise_response_path(exercise))
             expect(flash[:danger]).to match('Sorry, Your response was invalid!')
           end
         end
@@ -103,15 +103,15 @@ describe ResponsesController, type: :controller do
         stub_logged_in(true)
         stub_current_active_admin_user
 
-        passage_id = 'passage_id'
-        passage = double('passage')
+        exercise_id = 'exercise_id'
+        exercise = double('exercise')
         responses = double('responses')
 
-        expect(Passage).to receive(:find).with(passage_id).and_return(passage)
-        expect(passage).to receive(:responses).and_return(responses)
+        expect(Exercise).to receive(:find).with(exercise_id).and_return(exercise)
+        expect(exercise).to receive(:responses).and_return(responses)
         expect(responses).to receive(:order).with('created_at DESC')
 
-        get :index, params: { passage_id: passage_id }
+        get :index, params: { exercise_id: exercise_id }
         should render_template('index')
       end
     end
@@ -121,15 +121,15 @@ describe ResponsesController, type: :controller do
         stub_logged_in(true)
         stub_current_active_intern_user
 
-        passage_id = 'passage_id'
-        passage = double('passage')
+        exercise_id = 'exercise_id'
+        exercise = double('exercise')
         responses = double('responses')
 
-        expect(Passage).to receive(:find).with(passage_id).and_return(passage)
-        expect(passage).to receive(:responses).and_return(responses)
+        expect(Exercise).to receive(:find).with(exercise_id).and_return(exercise)
+        expect(exercise).to receive(:responses).and_return(responses)
         expect(responses).to receive(:order).with('created_at DESC')
 
-        get :index, params: { passage_id: passage_id }
+        get :index, params: { exercise_id: exercise_id }
         should render_template('index')
       end
     end

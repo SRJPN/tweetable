@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   skip_before_action :require_login, :active_user?, only: %i[new create destroy]
 
   def new
-    redirect_to passages_path if logged_in?
+    redirect_to exercises_path if logged_in?
   end
 
   def create
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email) || User.create(user_params)
     user = user.update_if_changed(user_params)
     assign_session_details(user)
-    redirect_to passages_path
+    redirect_to exercises_path
   end
 
   def destroy
