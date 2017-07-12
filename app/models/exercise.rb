@@ -13,6 +13,14 @@ class Exercise < ApplicationRecord
 
   DEFAULT_DURATION = 3600
 
+  def title
+    task.title
+  end
+
+  def text
+    task.text
+  end
+
   def commence(conclude_time)
     update_attributes(commence_time: Time.current, conclude_time: conclude_time)
   end
