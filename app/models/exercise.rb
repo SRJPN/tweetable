@@ -3,11 +3,11 @@
 class Exercise < ApplicationRecord
   after_initialize :defaults, unless: :persisted?
 
-  validates :title, presence: true
-  validates :text, presence: true
   validates_numericality_of :duration, greater_than_or_equal_to: 0
   validate :date_validations
+  validates :task_id, presence: true
 
+  belongs_to :task
   has_many :responses, dependent: :destroy
   has_many :responses_trackings, dependent: :destroy
 

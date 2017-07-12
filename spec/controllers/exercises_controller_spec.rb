@@ -3,9 +3,7 @@
 describe ExercisesController do
   let(:exercises) do
     [
-      {
-        title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2), duration: '1'
-      }
+
     ]
   end
 
@@ -84,15 +82,13 @@ describe ExercisesController do
     describe 'DELETE #destroy' do
       context 'with exercise id' do
         it 'should delete the exercise' do
-          @exercises = Exercise.create!(exercises)
-
-          exercise_find_by = Exercise.find_by(title: 'Climate Change')
+          task = Task.create(title: 'Climate Change', text: 'climate change exercise')
+          exercise = Exercise.create!(commence_time: Time.current, conclude_time: (Time.current + 2), duration: '1', task_id: task.id)
+          exercise_find_by = Exercise.find(exercise.id)
           delete :destroy, params: { id: exercise_find_by.id }
 
-          expect(Exercise.find_by(title: 'Climate Change')).to eq(nil)
+          expect(Exercise.all).to be_empty
           expect(response).to redirect_to(exercises_path)
-
-          @exercises.each(&:delete)
         end
       end
     end

@@ -13,42 +13,45 @@ describe ResponsesTracking do
 
   let(:exercises) do
     [
-      {
-        title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-      },
+        {
+            title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        },
 
-      {
-        title: 'Person', text: 'person exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-      },
-      {
-        title: 'Program', text: 'program exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-      },
-      {
-        title: 'Computer', text: 'computer exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
-      },
-      {
-        title: 'Human', text: 'human exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-      }
+        {
+            title: 'Person', text: 'person exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        },
+        {
+            title: 'Program', text: 'program exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        },
+        {
+            title: 'Computer', text: 'computer exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
+        },
+        {
+            title: 'Human', text: 'human exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+        }
     ]
   end
 
   let(:users) do
     [
-      {
-        name: 'Kamal Hasan', admin: false, email: 'kamalhasan@email.com', auth_id: '132271', image_url: 'http://graph.facebook.com/demo1'
-      },
-      {
-        name: 'Vimal Hasan', admin: false, email: 'vimalhasan@email.com', auth_id: '132273', image_url: 'http://graph.facebook.com/demo1'
-      },
-      {
-        name: 'Rajanikanth', admin: false, email: 'rajinikanth@email.com', auth_id: '132272', image_url: 'http://graph.facebook.com/demo2'
-      }
+        {
+            name: 'Kamal Hasan', admin: false, email: 'kamalhasan@email.com', auth_id: '132271', image_url: 'http://graph.facebook.com/demo1'
+        },
+        {
+            name: 'Vimal Hasan', admin: false, email: 'vimalhasan@email.com', auth_id: '132273', image_url: 'http://graph.facebook.com/demo1'
+        },
+        {
+            name: 'Rajanikanth', admin: false, email: 'rajinikanth@email.com', auth_id: '132272', image_url: 'http://graph.facebook.com/demo2'
+        }
     ]
   end
 
   before(:each) do
     @users = User.create(users)
-    @exercises = Exercise.create(exercises)
+    @exercises = exercises.map { |exercise|
+      task = Task.create(title: exercise[:title], text: exercise[:text])
+      task.exercises.create(exercise.reject { |attribute| !Exercise.attribute_method?(attribute) })
+    }
   end
 
   after(:each) do

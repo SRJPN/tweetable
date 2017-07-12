@@ -2,26 +2,27 @@
 
 describe Exercise, type: :model do
   describe 'validations ' do
-    it { should validate_presence_of(:title) }
-
-    it { should validate_presence_of(:text) }
+    it { should validate_presence_of(:task_id) }
 
     it { should validate_numericality_of(:duration).is_greater_than_or_equal_to(0) }
 
     it 'validate if commence time and conclude time is nil' do
-      exercise = Exercise.new(title: 'exercise title', text: 'exercise text', duration: 86_400)
+      task = Task.create(title: 'exercise title', text: 'exercise text')
+      exercise = Exercise.new(duration: 86_400, task_id: task.id)
       expect(exercise.save).to be true
     end
 
     it 'validate if commence time is nil and conclude time is given' do
-      exercise = Exercise.new(title: 'exercise title', text: 'exercise text', duration: 86_400, conclude_time: Time.current)
+      task = Task.create(title: 'exercise title', text: 'exercise text')
+      exercise = task.exercises.new(duration: 86_400, conclude_time: Time.current, task_id: task.id)
       expect(exercise.save).to be true
     end
 
     it 'validate if commence time present and conclude time past time with commence time' do
       current_time = Time.current
       past_time = current_time - 4.days
-      exercise = Exercise.new(title: 'exercise title', text: 'exercise text', duration: 86_400, commence_time: current_time, conclude_time: past_time)
+      task = Task.create(title: 'exercise title', text: 'exercise text')
+      exercise = Exercise.new(duration: 86_400, commence_time: current_time, conclude_time: past_time, task_id: task.id)
       expect(exercise.save).to be false
       expect(exercise.errors.full_messages).to include('Conclude time must be a future time...')
     end
@@ -29,19 +30,23 @@ describe Exercise, type: :model do
     it 'validate for conclude time present time' do
       current_time = Time.current
       past_time = current_time - 4.days
-      exercise = Exercise.new(title: 'exercise title', text: 'exercise text', duration: 86_400, commence_time: past_time, conclude_time: current_time)
+      task = Task.create(title: 'exercise title', text: 'exercise text')
+      exercise = Exercise.new(duration: 86_400, commence_time: past_time, conclude_time: current_time, task_id: task.id)
       expect(exercise.save).to be true
     end
   end
 
   describe 'associations' do
     it { should have_many(:responses).dependent(:destroy) }
+
+    it { should belong_to(:task) }
   end
 
   describe 'commence' do
     it 'should set the conclude time as current time' do
       Time.zone = 'Astana'
-      exercise = Exercise.create(title: 'exercise title', text: 'exercise text', duration: 86_400)
+      task = Task.create(title: 'exercise title', text: 'exercise text')
+      exercise = Exercise.create(duration: 86_400, task_id: task.id)
       now = Time.now.in_time_zone(ActiveSupport::TimeZone.new('Chennai'))
       exercise.commence(now.to_s)
       expect(exercise.conclude_time).to eq(Time.zone.parse(now.to_s))

@@ -10,19 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711182333) do
+ActiveRecord::Schema.define(version: 20170712100145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "exercises", force: :cascade do |t|
-    t.string "title"
-    t.string "text"
     t.datetime "commence_time"
     t.datetime "conclude_time"
     t.integer "duration"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "task_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -34,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170711182333) do
 
   create_table "response_queues", force: :cascade do |t|
     t.integer "response_id"
-    t.integer "exercise_id"
-    t.string "exercise_text"
+    t.integer "passage_id"
+    t.string "passage_text"
     t.string "response_text"
   end
 
@@ -80,6 +79,14 @@ ActiveRecord::Schema.define(version: 20170711182333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "color", default: "#5bc0de"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_groups", force: :cascade do |t|
