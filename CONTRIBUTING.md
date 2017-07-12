@@ -16,7 +16,7 @@ If you have new features in the mind. First share it with team and users to get 
 
 ## Feature Proposed
 - User Groups
-  This is the most useful and required feature which needs to be build.This will allow admin to group users in batches.So eventually a exercise can be given to a group rather than giving to everyone. This also changes some of the core models which requires lot of time to introduce this feature.For example Passages will be independent of the commence and conclude time.This will also allow that same exercises can be given to a group multiple time.
+  This is the most useful and required feature which needs to be build.This will allow admin to group users in batches.So eventually a exercise can be given to a group rather than giving to everyone. This also changes some of the core models which requires lot of time to introduce this feature.For example Exercises will be independent of the commence and conclude time.This will also allow that same exercises can be given to a group multiple time.
 - Expose API's
   The minimal version feature is the ability to give data to user on API calls where consumer can build their own visualization on the data.It could be extended as well where as an app we expose api's which can be consumed by any one and they can build their own app.
 - Badges

@@ -10,7 +10,7 @@
         <p>Your exercise cannot be retrieve once deleted. Do you confirm...?</p>
       </div>
       <div class="modal-footer">
-        <%= button_to 'Delete', passage_path(exercise.id), class: 'btn btn-danger', method: :delete %>
+        <%= button_to 'Delete', exercise_path(exercise.id), class: 'btn btn-danger', method: :delete %>
       </div>
     </div>
   </div>

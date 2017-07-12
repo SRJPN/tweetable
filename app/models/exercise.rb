@@ -35,36 +35,36 @@ class Exercise < ApplicationRecord
   end
 
   def self.commence_for_candidate(user)
-    ongoing_passages = ongoing
-    (ongoing_passages - user.exercises) - get_timed_out_passages(ongoing_passages, user.id)
+    ongoing_exercises = ongoing
+    (ongoing_exercises - user.exercises) - get_timed_out_exercises(ongoing_exercises, user.id)
   end
 
   def self.missed_by_candidate(user)
-    timed_out_passages = get_timed_out_passages(ongoing, user.id)
-    (concluded + timed_out_passages) - user.exercises
+    timed_out_exercises = get_timed_out_exercises(ongoing, user.id)
+    (concluded + timed_out_exercises) - user.exercises
   end
 
   def self.attempted_by_candidate(user)
     exercises = user.exercises
     responses = user.responses
-    exercises.map { |exercise| { exercise: exercise, response: get_passages_with_corresponding_response(responses, exercise.id) } }
+    exercises.map { |exercise| { exercise: exercise, response: get_exercises_with_corresponding_response(responses, exercise.id) } }
   end
 
-  def self.get_passages_with_corresponding_response(responses, exercise_id)
+  def self.get_exercises_with_corresponding_response(responses, exercise_id)
     responses.find { |response| response.exercise_id.equal?(exercise_id) }
   end
 
-  def self.passage_missed?(exercise, user_id)
+  def self.exercise_missed?(exercise, user_id)
     tracking_details = ResponsesTracking.find_by(exercise_id: exercise.id, user_id: user_id)
     return false if tracking_details.nil?
     ResponsesTracking.remaining_time(exercise.id, user_id) <= 0
   end
 
-  def self.get_timed_out_passages(ongoing_passages, user_id)
-    ongoing_passages.select { |exercise| passage_missed?(exercise, user_id) }
+  def self.get_timed_out_exercises(ongoing_exercises, user_id)
+    ongoing_exercises.select { |exercise| exercise_missed?(exercise, user_id) }
   end
 
-  private_class_method :passage_missed?, :get_passages_with_corresponding_response, :get_timed_out_passages
+  private_class_method :exercise_missed?, :get_exercises_with_corresponding_response, :get_timed_out_exercises
 
   private
 

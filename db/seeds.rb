@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-climate_change_passage = 'Investigating what is sometimes seen as one of the more favorable effects of
+climate_change_exercise = 'Investigating what is sometimes seen as one of the more favorable effects of
 climate change, a pair of scientists from UCLA has done a careful analysis of the melting
  of Arctic sea ice and concluded that it could lead to ships traversing the ice-free Northwest
- Passage (NWP) by 2050. It would also lead to much shorter transit times through the
-existing North Sea Passage (NSR). These developments may greatly reduce the time and cost
+ Exercise (NWP) by 2050. It would also lead to much shorter transit times through the
+existing North Sea Exercise (NSR). These developments may greatly reduce the time and cost
 of shipping but would also lead to unforeseen economic and geopolitical complications.'.freeze
 
-person_passage = 'This exercise was very moving to me. The story finally comes full circle,
+person_exercise = 'This exercise was very moving to me. The story finally comes full circle,
 and Amir is able to come to terms with himself. I think that the fact that he quoted Hassan
  when Hassan went to run his winning kite shows that Amir realizes now how incredibly
 important he was to Hassan, because he now feels the same about Hassan’s son, Sohrab.
@@ -15,7 +15,7 @@ important he was to Hassan, because he now feels the same about Hassan’s son, 
 Do you think Amir would love Sohrab equally and/or in the same way that he would love his own
 biological son? Why?'.freeze
 
-program_passage = 'The Brotherhood/Sister Sol’s Rites of Passage (ROP) Program is the foundation
+program_exercise = 'The Brotherhood/Sister Sol’s Rites of Exercise (ROP) Program is the foundation
 of the organization. Our goal is to empower youth through discovery and discussion of history,
 culture, social problems, and the political forces surrounding them. We establish partnerships
 with public secondary schools to develop gender-specific (Brotherhood or Sister Sol) chapters,
@@ -24,13 +24,13 @@ facilitate weekly sessions and serve as mentors, supporters, confidantes, counse
 and more. They build trusting relationships and offer guidance to the chapter members as they
 face the challenges of young adulthood.'.freeze
 
-computer_passage = 'Now computers have noticeable impact on social relations. They have enabled
+computer_exercise = 'Now computers have noticeable impact on social relations. They have enabled
 entirely new forms of social interaction, activities, and organizing. With the Internet, working
 with computers has become part of our daily lives thanks to its basic features such as widespread
 usability and access. In addition to face to face communication that characterized humans for centuries,
 a new form of virtual communication has become more predominant.'.freeze
 
-human_passage = 'There is compelling evidence that both human immunodeficiency virus (HIV) types emerged
+human_exercise = 'There is compelling evidence that both human immunodeficiency virus (HIV) types emerged
 from two dissimilar simian immunodeficiency viruses (SIVs) in separate geographical regions of Africa.
 Each of the two HIVs has its own simian progenitor and specific genetic precursor, and all of the primates
 that carry these SIVs have been in close contact with humans for thousands of years without the emergence of
@@ -64,25 +64,25 @@ unless Rails.env.production?
       ]
   )
 
-# --------------- Passage Seeds ---------------------
+# --------------- Exercise Seeds ---------------------
 
   Exercise.create(
       [
           {
-              title: 'Climate Change', text: climate_change_passage, commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600'
+              title: 'Climate Change', text: climate_change_exercise, commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600'
           },
 
           {
-              title: 'Person', text: person_passage, commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200'
+              title: 'Person', text: person_exercise, commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200'
           },
           {
-              title: 'Program', text: program_passage, commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200'
+              title: 'Program', text: program_exercise, commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200'
           },
           {
-              title: 'Computer', text: computer_passage, commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200'
+              title: 'Computer', text: computer_exercise, commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200'
           },
           {
-              title: 'Human', text: human_passage, commence_time: nil, conclude_time: nil, duration: '7200'
+              title: 'Human', text: human_exercise, commence_time: nil, conclude_time: nil, duration: '7200'
           }
       ]
   )

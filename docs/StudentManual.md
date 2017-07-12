@@ -6,7 +6,7 @@ Tweetable is a platform for a teacher and student where a teacher can give an ex
 
 ### Terminology
 
-#### Passage
+#### Exercise
 &nbsp; &nbsp; &nbsp; It is a paragraph which is the main part of the exercise.
 
 #### Response

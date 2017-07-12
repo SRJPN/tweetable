@@ -13,13 +13,13 @@ describe ExercisesHelper, type: :helper do
     end
   end
 
-  describe 'drafts_passage_partial?' do
+  describe 'drafts_exercise_partial?' do
     it 'should return true when its a drafts exercise pertial' do
-      expect(helper.drafts_passage_partial?('drafts_passages')).to eq(true)
+      expect(helper.drafts_exercise_partial?('drafts_exercises')).to eq(true)
     end
 
     it 'should return false when its not a drafts exercise pertial' do
-      expect(helper.drafts_passage_partial?('concluded_passages')).to eq(false)
+      expect(helper.drafts_exercise_partial?('concluded_exercises')).to eq(false)
     end
   end
 
@@ -87,8 +87,8 @@ describe ExercisesHelper, type: :helper do
 
   describe '#partial_name' do
     it 'should return the correspondent exercise partial_name' do
-      expect(ExercisesHelper.partial_name(:drafts)).to eq('drafts_passages')
-      expect(ExercisesHelper.partial_name(:attempted)).to eq('attempted_passages')
+      expect(ExercisesHelper.partial_name(:drafts)).to eq('drafts_exercises')
+      expect(ExercisesHelper.partial_name(:attempted)).to eq('attempted_exercises')
     end
     it 'should return the nil partial_name when tab name is different' do
       expect(ExercisesHelper.partial_name(:attempt)).to eq(nil)
@@ -97,7 +97,7 @@ describe ExercisesHelper, type: :helper do
 
   describe '#empty_tab_messages' do
     it 'should return the correspondent empty exercise message based on tab name' do
-      expect(ExercisesHelper.empty_tab_messages(:attempted_passages.to_s)).to eq('You have not yet attempted any exercises.')
+      expect(ExercisesHelper.empty_tab_messages(:attempted_exercises.to_s)).to eq('You have not yet attempted any exercises.')
     end
     it 'should return the nil empty message when partial_name is different' do
       expect(ExercisesHelper.partial_name(:attempt.to_s)).to eq(nil)

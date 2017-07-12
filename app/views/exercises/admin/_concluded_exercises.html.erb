@@ -1,3 +1,4 @@
+
 <div class="panel panel-default">
 	<div class="panel-heading app-exercise-head">
 		<div class="app-exercise-header">
@@ -5,13 +6,15 @@
 		</div>
 	</div>
 	<div class="panel-body">
-			<%= render :partial => 'exercises/common/content', locals: {exercise: exercise} %>
+		<%= render :partial => 'exercises/common/content', locals: {exercise: exercise} %>
 		<div class="app-exercise-options">
 			<div class="app-exercise-info">
+				<%= render :partial => 'exercises/admin/concludes', locals: {exercise: exercise, name: 'Concluded on'} %>
 				<span class="app-exercise-info-item"> <i class="fa fa-users" aria-hidden="true"></i><%= exercise.responses.count %> </span>
+				<span class="app-exercise-info-item"><i class="fa fa-check" aria-hidden="true"></i> <%= evaluation_count(exercise.responses) %></span>
 			</div>
 			<div class="app-exercise-actions">
-				<%= button_to 'View all responses', passage_responses_path(exercise), method: :get, class: 'btn btn-info pull-right'%>
+				<%= content_tag(:a, 'Review', href: exercise_responses_path(exercise.id), class: 'btn btn-info pull-right') %>
 			</div>
 		</div>
 	</div>

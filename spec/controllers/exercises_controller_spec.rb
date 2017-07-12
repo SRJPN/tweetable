@@ -27,7 +27,7 @@ describe ExercisesController do
           post :create, params: { exercise: valid_attributes }
 
           expect(response).to redirect_to(exercises_path)
-          expect(flash[:success]).to match('Passage was successfully created.')
+          expect(flash[:success]).to match('Exercise was successfully created.')
         end
       end
 
@@ -60,7 +60,7 @@ describe ExercisesController do
           post :update, params: { id: 'id', exercise: valid_attributes }
 
           expect(response).to redirect_to(exercises_path)
-          expect(flash[:success]).to match('Passage was successfully updated.')
+          expect(flash[:success]).to match('Exercise was successfully updated.')
         end
       end
 
@@ -86,8 +86,8 @@ describe ExercisesController do
         it 'should delete the exercise' do
           @exercises = Exercise.create!(exercises)
 
-          passage_find_by = Exercise.find_by(title: 'Climate Change')
-          delete :destroy, params: { id: passage_find_by.id }
+          exercise_find_by = Exercise.find_by(title: 'Climate Change')
+          delete :destroy, params: { id: exercise_find_by.id }
 
           expect(Exercise.find_by(title: 'Climate Change')).to eq(nil)
           expect(response).to redirect_to(exercises_path)
@@ -99,7 +99,7 @@ describe ExercisesController do
 
     describe 'GET #edit' do
       it 'should give edit form for the exercise' do
-        exercise = double('Passage', text: 'This is a exercise text')
+        exercise = double('Exercise', text: 'This is a exercise text')
 
         expect(Exercise).to receive(:find).with('12').and_return(exercise)
         get :edit, params: { id: 12 }
@@ -110,7 +110,7 @@ describe ExercisesController do
     describe 'PUT #commence' do
       it 'should commence the exercise' do
         past_time = Time.current + 2.days
-        exercise = double('Passage', commence: true)
+        exercise = double('Exercise', commence: true)
         expect(Exercise).to receive(:find).and_return(exercise)
         put :commence, params: { id: 12, exercise: { conclude_time: past_time } }
         expect(response).to redirect_to(exercises_path)
@@ -119,7 +119,7 @@ describe ExercisesController do
       it 'should not commence the exercise' do
         past_time = Time.current - 1.days
         errors = double('Errors', messages: [['conclude_time', 'must be a future time']])
-        exercise = double('Passage', errors: errors)
+        exercise = double('Exercise', errors: errors)
 
         expect(exercise).to receive(:commence)
         expect(Exercise).to receive(:find).and_return(exercise)
@@ -143,7 +143,7 @@ describe ExercisesController do
           get :drafts, params: { from_tab: true }
           expect(response).to be_success
           expect(flash[:danger]).to be_nil
-          should render_template('exercises/admin/passages_pane')
+          should render_template('exercises/admin/exercises_pane')
         end
       end
 
@@ -152,7 +152,7 @@ describe ExercisesController do
           get :ongoing, params: { from_tab: true }
           expect(response).to be_success
           expect(flash[:danger]).to be_nil
-          should render_template('exercises/admin/passages_pane')
+          should render_template('exercises/admin/exercises_pane')
         end
       end
 
@@ -161,7 +161,7 @@ describe ExercisesController do
           get :concluded, params: { from_tab: true }
 
           expect(response).to be_success
-          should render_template('exercises/admin/passages_pane')
+          should render_template('exercises/admin/exercises_pane')
         end
       end
     end
@@ -178,7 +178,7 @@ describe ExercisesController do
           get :commenced
 
           expect(response).to be_success
-          should render_template('exercises/candidate/passages_pane')
+          should render_template('exercises/candidate/exercises_pane')
         end
       end
 
@@ -189,7 +189,7 @@ describe ExercisesController do
           get :missed
 
           expect(response).to be_success
-          should render_template('exercises/candidate/passages_pane')
+          should render_template('exercises/candidate/exercises_pane')
         end
       end
 
@@ -200,7 +200,7 @@ describe ExercisesController do
           get :attempted
 
           expect(response).to be_success
-          should render_template('exercises/candidate/attempted_passages_pane')
+          should render_template('exercises/candidate/attempted_exercises_pane')
         end
       end
     end

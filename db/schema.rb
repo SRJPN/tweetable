@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(version: 20170711182333) do
 
   create_table "response_queues", force: :cascade do |t|
     t.integer "response_id"
-    t.integer "passage_id"
-    t.string "passage_text"
+    t.integer "exercise_id"
+    t.string "exercise_text"
     t.string "response_text"
   end
 

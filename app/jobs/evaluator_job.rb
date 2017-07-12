@@ -8,10 +8,10 @@ class EvaluatorJob
 
     # get response text and exercise text
     response_text = job.response_text
-    passage_text = job.passage_text
+    exercise_text = job.exercise_text
 
     # evaluating using given engine
-    results = engine.evaluate(passage_text, response_text)
+    results = engine.evaluate(exercise_text, response_text)
 
     # generating taggings
     tagger.generate_taggings job, results

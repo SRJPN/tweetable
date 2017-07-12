@@ -11,14 +11,14 @@ describe EvaluatorJob do
     it 'should execute job if job is present' do
       queue = double('queue')
       response_text = 'response_text'
-      passage_text = 'passage_text'
-      job = double('job', passage_text: passage_text, response_text: response_text)
+      exercise_text = 'exercise_text'
+      job = double('job', exercise_text: exercise_text, response_text: response_text)
       engine = double('engine')
       results = []
       tagger = double('tagger')
 
       expect(queue).to receive(:fetch).and_return job
-      expect(engine).to receive(:evaluate).with(passage_text, response_text).and_return results
+      expect(engine).to receive(:evaluate).with(exercise_text, response_text).and_return results
       expect(tagger).to receive(:generate_taggings).with(job, results)
       expect(queue).to receive(:ack).with job
 

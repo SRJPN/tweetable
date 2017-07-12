@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'Passages', type: :request do
+RSpec.describe 'Exercises', type: :request do
   describe 'GET /exercises' do
     it 'works! (now write some real specs)' do
       get exercises_path

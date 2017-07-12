@@ -6,7 +6,7 @@ Tweetable is a platform for a teacher and student where a teacher gives an exerc
 
 ## Terminology
 
-#### Passage
+#### Exercise
 &nbsp; &nbsp; &nbsp; It is a paragraph which is the main part of the exercise.
 
 #### Response
@@ -63,7 +63,7 @@ you can proceed without time.
 
 **Commencing a exercise** - The exercises in drafts have a Commence feature. This feature comes handy when you want to give exercise right away. It will ask a conclude time which is necessary.By default, the conclude time is two days from the current time. This action will move the exercise to ongoing section.
 
-**Concluding a Passage** - The exercises which are ongoing can be concluded at any time. This feature meant to be used wisely because it concludes the exercise before the given time. It will immediately conclude the exercise and move it to Conclude section. A case will be when an admins find that there are enough responses.
+**Concluding a Exercise** - The exercises which are ongoing can be concluded at any time. This feature meant to be used wisely because it concludes the exercise before the given time. It will immediately conclude the exercise and move it to Conclude section. A case will be when an admins find that there are enough responses.
 
 **Evaluating Responses** - While the exercise is ongoing or concluded an admin can review the responses. The reviewing mechanism is straight forward an admin gives a tag to a response. Tag's color, weight and description can be modified in the tags section.
 An example of a tag could be #concise #grammar mistake etc...

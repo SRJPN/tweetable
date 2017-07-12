@@ -8,7 +8,7 @@ Then(/^I should see "(.*?)"$/) do |expected_text|
   expect(page).to have_content(expected_text)
 end
 
-Then(/^I should see "(.*?)" passages$/) do |expected_text|
+Then(/^I should see "(.*?)" exercises$/) do |expected_text|
   expect(page).to have_content(expected_text)
 end
 

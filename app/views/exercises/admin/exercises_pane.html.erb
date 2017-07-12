@@ -1,8 +1,8 @@
 <div class="row" id="app-exercise-container" data-tab-name="<%= partial_name  %>">
-	<%= content_tag(:h3 , partial_name.humanize, class: 'col-sm-6 center-block visible-xs-block') unless filtered_passages.empty? %>
+	<%= content_tag(:h3 , partial_name.humanize, class: 'col-sm-6 center-block visible-xs-block') unless filtered_exercises.empty? %>
   <% empty_message = ExercisesHelper.empty_tab_messages(partial_name) %>
-  <%= render 'exercises/common/empty_message', :message => empty_message if filtered_passages.empty? %>
-  <% filtered_passages.each do |exercise| %>
+  <%= render 'exercises/common/empty_message', :message => empty_message if filtered_exercises.empty? %>
+  <% filtered_exercises.each do |exercise| %>
       <div class="col-lg-11 center-block">
         <%= render "exercises/admin/" + partial_name, :exercise => exercise %>
       </div>

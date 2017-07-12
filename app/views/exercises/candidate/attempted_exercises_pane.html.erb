@@ -1,0 +1,12 @@
+<div class="row" id="app-exercise-container" data-tab-name="attempted_exercises" >
+	<%= content_tag(:h3 , 'Attempted exercises', class: 'col-sm-6 center-block  visible-xs-block') unless filtered_exercises.empty? %>
+  <% partial_name = ExercisesHelper.partial_name(:attempted) %>
+  <% empty_message = ExercisesHelper.empty_tab_messages(partial_name) %>
+  <%= render 'exercises/common/empty_message', :message => empty_message if filtered_exercises.empty? %>
+  <% filtered_exercises.each do |exercise_with_response| %>
+      <div class="col-lg-11 center-block">
+        <%= render 'exercises/candidate/attempted_exercises', :exercise_with_response => exercise_with_response %>
+      </div>
+  <% end %>
+</div>
+

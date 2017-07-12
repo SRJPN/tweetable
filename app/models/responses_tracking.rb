@@ -13,10 +13,10 @@ class ResponsesTracking < ApplicationRecord
 
     current_time = Time.current
     conclude_time_duration = tracking_detail.exercise.conclude_time - current_time
-    passage_duration = tracking_detail.exercise.duration
-    return conclude_time_duration if passage_duration.zero? || passage_duration.nil?
+    exercise_duration = tracking_detail.exercise.duration
+    return conclude_time_duration if exercise_duration.zero? || exercise_duration.nil?
 
-    remaining_time = passage_duration - (current_time - tracking_detail.created_at)
+    remaining_time = exercise_duration - (current_time - tracking_detail.created_at)
     [remaining_time, conclude_time_duration].min
   end
 

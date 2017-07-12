@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ExercisesHelper
-  DRAFT_PASSAGES = 'drafts_passages'.freeze
+  DRAFT_PASSAGES = 'drafts_exercises'.freeze
 
   def admin_tabs
     { drafts: :drafts, ongoing: :ongoing, concluded: :concluded, new: :new }
@@ -13,12 +13,12 @@ module ExercisesHelper
 
   def self.partial_name(tab_name)
     partial_list = {
-      drafts: 'drafts_passages',
-      ongoing: 'ongoing_passages',
-      concluded: 'concluded_passages',
-      commenced: 'commenced_passages',
-      attempted: 'attempted_passages',
-      missed: 'missed_passages'
+      drafts: 'drafts_exercises',
+      ongoing: 'ongoing_exercises',
+      concluded: 'concluded_exercises',
+      commenced: 'commenced_exercises',
+      attempted: 'attempted_exercises',
+      missed: 'missed_exercises'
     }
     partial_list[tab_name]
   end
@@ -39,7 +39,7 @@ module ExercisesHelper
     time.strftime('%d-%m-%Y %I:%M%p') unless time.nil?
   end
 
-  def drafts_passage_partial?(partial)
+  def drafts_exercise_partial?(partial)
     partial.eql?(DRAFT_PASSAGES)
   end
 
@@ -57,8 +57,8 @@ module ExercisesHelper
     end.join(', ')
   end
 
-  def evaluation_count(passage_responses)
-    passage_responses.map do |response|
+  def evaluation_count(exercise_responses)
+    exercise_responses.map do |response|
       tags = response.tags
       !(tags.nil? || tags.empty?)
     end.count(true)
