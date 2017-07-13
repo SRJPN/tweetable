@@ -3,37 +3,6 @@
 describe Exercise, type: :model do
   describe 'validations ' do
     it { should validate_presence_of(:task_id) }
-
-    it { should validate_numericality_of(:duration).is_greater_than_or_equal_to(0) }
-
-    it 'validate if commence time and conclude time is nil' do
-      task = Task.create(title: 'exercise title', text: 'exercise text')
-      exercise = Exercise.new(duration: 86_400, task_id: task.id)
-      expect(exercise.save).to be true
-    end
-
-    it 'validate if commence time is nil and conclude time is given' do
-      task = Task.create(title: 'exercise title', text: 'exercise text')
-      exercise = task.exercises.new(duration: 86_400, conclude_time: Time.current, task_id: task.id)
-      expect(exercise.save).to be true
-    end
-
-    it 'validate if commence time present and conclude time past time with commence time' do
-      current_time = Time.current
-      past_time = current_time - 4.days
-      task = Task.create(title: 'exercise title', text: 'exercise text')
-      exercise = Exercise.new(duration: 86_400, commence_time: current_time, conclude_time: past_time, task_id: task.id)
-      expect(exercise.save).to be false
-      expect(exercise.errors.full_messages).to include('Conclude time must be a future time...')
-    end
-
-    it 'validate for conclude time present time' do
-      current_time = Time.current
-      past_time = current_time - 4.days
-      task = Task.create(title: 'exercise title', text: 'exercise text')
-      exercise = Exercise.new(duration: 86_400, commence_time: past_time, conclude_time: current_time, task_id: task.id)
-      expect(exercise.save).to be true
-    end
   end
 
   describe 'associations' do
@@ -46,7 +15,8 @@ describe Exercise, type: :model do
     it 'should set the conclude time as current time' do
       Time.zone = 'Astana'
       task = Task.create(title: 'exercise title', text: 'exercise text')
-      exercise = Exercise.create(duration: 86_400, task_id: task.id)
+      exercise = Exercise.create(task_id: task.id)
+      config = ExerciseConfig.create(duration: 86_400, exercise_id: exercise.id)
       now = Time.now.in_time_zone(ActiveSupport::TimeZone.new('Chennai'))
       exercise.commence(now.to_s)
       expect(exercise.conclude_time).to eq(Time.zone.parse(now.to_s))
@@ -57,7 +27,7 @@ describe Exercise, type: :model do
     it 'should get all open exercises' do
       now = Time.current
       expect(Time).to receive(:current).and_return(now)
-      expect(Exercise).to receive(:where).with(['commence_time <= ? and conclude_time > ?', now, now]).and_return([])
+      expect(ExerciseConfig).to receive(:where).with(['commence_time <= ? and conclude_time > ?', now, now]).and_return([])
       Exercise.ongoing
     end
   end
@@ -67,9 +37,11 @@ describe Exercise, type: :model do
       now = Time.current
       expect(Time).to receive(:current).and_return(now)
       exercise_or = double('OR')
-      expect(Exercise).to receive(:where).with(commence_time: nil)
-      expect(exercise_or).to receive(:or)
-      expect(Exercise).to receive(:where).with(['commence_time > ?', now]).and_return(exercise_or)
+      exercises = double('exercises')
+      expect(ExerciseConfig).to receive(:where).with(commence_time: nil)
+      expect(exercise_or).to receive(:or).and_return exercises
+      expect(ExerciseConfig).to receive(:where).with(['commence_time > ?', now]).and_return(exercise_or)
+      expect(exercises).to receive(:map)
       Exercise.drafts
     end
   end
@@ -77,8 +49,10 @@ describe Exercise, type: :model do
   describe '#concluded_exercises' do
     it 'should get all concluded exercises' do
       now = Time.current
+      exercises = double('exercises')
       expect(Time).to receive(:current).and_return(now)
-      expect(Exercise).to receive(:where).with(['conclude_time < ?', now])
+      expect(ExerciseConfig).to receive(:where).with(['conclude_time < ?', now]).and_return exercises
+      expect(exercises).to receive(:map)
       Exercise.concluded
     end
   end

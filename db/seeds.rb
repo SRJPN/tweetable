@@ -46,7 +46,7 @@ unless ENV['TWEETABLE_ADMIN_EMAIL']
   puts "\t source TWEETABLE_ADMIN_EMAIL=admin_email@domain"
   exit 1
 end
-User.create(email:ENV['TWEETABLE_ADMIN_EMAIL'],admin: true, active: true)
+User.create(email: ENV['TWEETABLE_ADMIN_EMAIL'], admin: true, active: true)
 
 unless Rails.env.production?
 # --------------- User Seeds ---------------------
@@ -64,31 +64,89 @@ unless Rails.env.production?
       ]
   )
 
+# --------------- Task Seeds ---------------------
+  Task.create(
+      [
+          {
+              title: 'Climate Change', text: climate_change_exercise
+          },
+
+          {
+              title: 'Person', text: person_exercise
+          },
+          {
+              title: 'Program', text: program_exercise
+          },
+          {
+              title: 'Computer', text: computer_exercise
+          },
+          {
+              title: 'Human', text: human_exercise
+          },
+          {
+              title: 'News', text: 'news exercise'
+          },
+          {
+              title: 'Class', text: 'class exercise'
+          }
+      ]
+  )
+
 # --------------- Exercise Seeds ---------------------
 
   Exercise.create(
       [
           {
-              title: 'Climate Change', text: climate_change_exercise, commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600'
+              task_id: Task.all.first.id
           },
 
           {
-              title: 'Person', text: person_exercise, commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200'
+              task_id: Task.all.second.id
           },
           {
-              title: 'Program', text: program_exercise, commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200'
+              task_id: Task.all.third.id
           },
           {
-              title: 'Computer', text: computer_exercise, commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200'
+              task_id: Task.all.fourth.id
           },
           {
-              title: 'Human', text: human_exercise, commence_time: nil, conclude_time: nil, duration: '7200'
+              task_id: Task.all.fifth.id
+          },
+          {
+              task_id: Task.all[5].id
+          },
+          {
+              task_id: Task.all[6].id
           }
       ]
   )
 
-  Exercise.new(title: 'News', text: 'news exercise', commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
-  Exercise.new(title: 'Class', text: 'class exercise', commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200').save(validate: false)
+# --------------- config Seeds ---------------------
+
+  ExerciseConfig.create(
+      [
+          {
+              commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600', exercise_id: Exercise.all.first
+          },
+
+          {
+              commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.second
+          },
+          {
+              commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.third
+          },
+          {
+              commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200', exercise_id: Exercise.all.fourth
+          },
+          {
+              commence_time: nil, conclude_time: nil, duration: '7200', exercise_id: Exercise.all.fifth
+          }
+      ]
+  )
+
+
+  ExerciseConfig.new(commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[5]).save(validate: false)
+  ExerciseConfig.new(commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[6]).save(validate: false)
 
 
 # --------------- Response Seeds ---------------------
@@ -96,19 +154,19 @@ unless Rails.env.production?
   Response.create(
       [
           {
-              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132271').id, exercise_id: Exercise.find_by(title: 'Climate Change').id
+              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132271').id, exercise_id: Task.find_by(title: 'Climate Change').exercises.first.id
           },
           {
-              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'Climate Change').id
+              text: "respose for Climate Changed", user_id: User.find_by(auth_id: '132273').id, exercise_id: Task.find_by(title: 'Climate Change').exercises.first.id
           },
           {
-              text: "respose for Person", user_id: User.find_by(auth_id: '132271').id, exercise_id: Exercise.find_by(title: 'Person').id
+              text: "respose for Person", user_id: User.find_by(auth_id: '132271').id, exercise_id: Task.find_by(title: 'Person').exercises.first.id
           },
           {
-              text: "respose for Person", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'Person').id
+              text: "respose for Person", user_id: User.find_by(auth_id: '132273').id, exercise_id: Task.find_by(title: 'Person').exercises.first.id
           },
           {
-              text: "News Response", user_id: User.find_by(auth_id: '132273').id, exercise_id: Exercise.find_by(title: 'News').id
+              text: "News Response", user_id: User.find_by(auth_id: '132273').id, exercise_id: Task.find_by(title: 'News').exercises.first.id
           }
       ]
   )

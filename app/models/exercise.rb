@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
 class Exercise < ApplicationRecord
-  after_initialize :defaults, unless: :persisted?
-
-  validates_numericality_of :duration, greater_than_or_equal_to: 0
-  validate :date_validations
   validates :task_id, presence: true
 
   belongs_to :task
+  accepts_nested_attributes_for :task
+
+  has_one :exercise_config
+  accepts_nested_attributes_for :exercise_config
+
   has_many :responses, dependent: :destroy
   has_many :responses_trackings, dependent: :destroy
-
-  DEFAULT_DURATION = 3600
 
   def title
     task.title
@@ -21,25 +20,37 @@ class Exercise < ApplicationRecord
     task.text
   end
 
+  def commence_time
+    exercise_config.commence_time
+  end
+
+  def duration
+    exercise_config.duration
+  end
+
+  def conclude_time
+    exercise_config.conclude_time
+  end
+
   def commence(conclude_time)
-    update_attributes(commence_time: Time.current, conclude_time: conclude_time)
+    exercise_config.update_attributes(commence_time: Time.current, conclude_time: conclude_time)
   end
 
   def conclude
-    update_attributes(conclude_time: Time.current)
+    exercise_config.update_attributes(conclude_time: Time.current)
   end
 
   def self.drafts
-    Exercise.where(['commence_time > ?', Time.current]).or(Exercise.where(commence_time: nil))
+    ExerciseConfig.where(['commence_time > ?', Time.current]).or(ExerciseConfig.where(commence_time: nil)).map(&:exercise)
   end
 
   def self.ongoing
     now = Time.current
-    Exercise.where(['commence_time <= ? and conclude_time > ?', now, now])
+    ExerciseConfig.where(['commence_time <= ? and conclude_time > ?', now, now]).map(&:exercise)
   end
 
   def self.concluded
-    Exercise.where(['conclude_time < ?', Time.current])
+    ExerciseConfig.where(['conclude_time < ?', Time.current]).map(&:exercise)
   end
 
   def self.commence_for_candidate(user)
@@ -73,24 +84,4 @@ class Exercise < ApplicationRecord
   end
 
   private_class_method :exercise_missed?, :get_exercises_with_corresponding_response, :get_timed_out_exercises
-
-  private
-
-  def date_validations
-    return if valid_commence_time?
-    errors.add(:conclude_time, 'must be a future time...')
-  end
-
-  def valid_conclude_time?
-    conclude_time.present? && conclude_time > commence_time
-  end
-
-  def valid_commence_time?
-    return true unless commence_time.present?
-    valid_conclude_time?
-  end
-
-  def defaults
-    self.duration ||= DEFAULT_DURATION
-  end
 end

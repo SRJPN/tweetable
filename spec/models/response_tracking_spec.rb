@@ -50,7 +50,9 @@ describe ResponsesTracking do
     @users = User.create(users)
     @exercises = exercises.map { |exercise|
       task = Task.create(title: exercise[:title], text: exercise[:text])
-      task.exercises.create(commence_time: exercise[:commence_time],conclude_time: exercise[:conclude_time],duration: exercise[:duration])
+      exercise_created = task.exercises.create
+      ExerciseConfig.create(commence_time: exercise[:commence_time], conclude_time: exercise[:conclude_time], duration: exercise[:duration], exercise_id: exercise_created.id)
+      exercise_created
     }
   end
 

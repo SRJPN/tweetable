@@ -83,7 +83,7 @@ describe ExercisesController do
       context 'with exercise id' do
         it 'should delete the exercise' do
           task = Task.create(title: 'Climate Change', text: 'climate change exercise')
-          exercise = Exercise.create!(commence_time: Time.current, conclude_time: (Time.current + 2), duration: '1', task_id: task.id)
+          exercise = task.exercises.create
           exercise_find_by = Exercise.find(exercise.id)
           delete :destroy, params: { id: exercise_find_by.id }
 
