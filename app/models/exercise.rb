@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Exercise < ApplicationRecord
+  scope :drafts, -> { ExerciseConfig.where(['commence_time > ?', Time.current]).or(ExerciseConfig.where(commence_time: nil)).map(&:exercise) }
+  scope :ongoing, -> { now = Time.current; ExerciseConfig.where(['commence_time <= ? and conclude_time > ?', now, now]).map(&:exercise) }
+  scope :concluded, -> { ExerciseConfig.where(['conclude_time < ?', Time.current]).map(&:exercise) }
+
   validates :task_id, presence: true
 
   belongs_to :task
@@ -38,19 +42,6 @@ class Exercise < ApplicationRecord
 
   def conclude
     exercise_config.update_attributes(conclude_time: Time.current)
-  end
-
-  def self.drafts
-    ExerciseConfig.where(['commence_time > ?', Time.current]).or(ExerciseConfig.where(commence_time: nil)).map(&:exercise)
-  end
-
-  def self.ongoing
-    now = Time.current
-    ExerciseConfig.where(['commence_time <= ? and conclude_time > ?', now, now]).map(&:exercise)
-  end
-
-  def self.concluded
-    ExerciseConfig.where(['conclude_time < ?', Time.current]).map(&:exercise)
   end
 
   def self.commence_for_candidate(user)
