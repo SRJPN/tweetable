@@ -126,27 +126,27 @@ unless Rails.env.production?
   ExerciseConfig.create(
       [
           {
-              commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600', exercise_id: Exercise.all.first
+              commence_time: Time.current, conclude_time: (Time.current+2.days.days), duration: '3600', exercise_id: Exercise.all.first.id
           },
 
           {
-              commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.second
+              commence_time: Time.current, conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.second.id
           },
           {
-              commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.third
+              commence_time: (Time.current-3.days), conclude_time: (Time.current+1.days), duration: '7200', exercise_id: Exercise.all.third.id
           },
           {
-              commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200', exercise_id: Exercise.all.fourth
+              commence_time: (Time.current+3.days), conclude_time: (Time.current+7.days), duration: '7200', exercise_id: Exercise.all.fourth.id
           },
           {
-              commence_time: nil, conclude_time: nil, duration: '7200', exercise_id: Exercise.all.fifth
+              commence_time: nil, conclude_time: nil, duration: '7200', exercise_id: Exercise.all.fifth.id
           }
       ]
   )
 
 
-  ExerciseConfig.new(commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[5]).save(validate: false)
-  ExerciseConfig.new(commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[6]).save(validate: false)
+  ExerciseConfig.new(commence_time: (Time.current-2.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[5].id).save(validate: false)
+  ExerciseConfig.new(commence_time: (Time.current-3.days), conclude_time: (Time.current-1.days), duration: '7200', exercise_id: Exercise.all[6].id).save(validate: false)
 
 
 # --------------- Response Seeds ---------------------

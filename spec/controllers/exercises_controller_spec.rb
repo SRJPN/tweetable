@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 describe ExercisesController do
-  let(:exercises) do
-    [
-
-    ]
-  end
-
   context 'admin specific features' do
     before(:each) do
       stub_logged_in(true)
