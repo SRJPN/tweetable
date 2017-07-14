@@ -1,7 +1,7 @@
 class ExerciseConfig < ApplicationRecord
   after_initialize :defaults, unless: :persisted?
 
-  validates :exercise_id, presence: true
+  validates_presence_of :exercise
   validates_numericality_of :duration, greater_than_or_equal_to: 0
   validate :date_validations
 

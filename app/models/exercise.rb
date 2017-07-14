@@ -5,9 +5,9 @@ class Exercise < ApplicationRecord
   scope :ongoing, -> { now = Time.current; ExerciseConfig.where(['commence_time <= ? and conclude_time > ?', now, now]).map(&:exercise) }
   scope :concluded, -> { ExerciseConfig.where(['conclude_time < ?', Time.current]).map(&:exercise) }
 
-  validates :task_id, presence: true
+  validates_presence_of :task
 
-  belongs_to :task
+  belongs_to :task, :inverse_of => :exercises
   accepts_nested_attributes_for :task
 
   has_one :exercise_config

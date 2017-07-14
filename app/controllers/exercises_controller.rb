@@ -7,6 +7,8 @@ class ExercisesController < ApplicationController
 
   def new
     @exercise = Exercise.new
+    @exercise.task = Task.new
+    @exercise.exercise_config = ExerciseConfig.new
   end
 
   def edit
@@ -76,28 +78,28 @@ class ExercisesController < ApplicationController
   def drafts
     filtered_exercises = Exercise.drafts
     render 'exercises/admin/exercises_pane', locals: {
-      filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:drafts)
+        filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:drafts)
     }
   end
 
   def ongoing
     filtered_exercises = Exercise.ongoing
     render 'exercises/admin/exercises_pane', locals: {
-      filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:ongoing)
+        filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:ongoing)
     }
   end
 
   def concluded
     filtered_exercises = Exercise.concluded
     render 'exercises/admin/exercises_pane', locals: {
-      filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:concluded)
+        filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:concluded)
     }
   end
 
   def commenced
     filtered_exercises = Exercise.commence_for_candidate(current_user)
     render 'exercises/candidate/exercises_pane', locals: {
-      filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:commenced)
+        filtered_exercises: filtered_exercises, partial_name: ExercisesHelper.partial_name(:commenced)
     }
   end
 
@@ -114,7 +116,7 @@ class ExercisesController < ApplicationController
   private
 
   def permit_params
-    params.require('exercise').permit(:title, :text, :duration, :commence_time, :conclude_time)
+    params.require('exercise').permit(task_attributes: [:title, :text], exercise_config_attributes: [:exercise_id, :duration, :commence_time, :conclude_time])
   end
 
   def display_flash_error(exercise)
