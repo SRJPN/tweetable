@@ -1,4 +1,4 @@
-# Tweetable
+# Tweetable [![Build Status](https://travis-ci.org/SRJPN/tweetable.svg?branch=master)](https://travis-ci.org/SRJPN/tweetable)
 
 _Helping people to be concise, Precisely._
 
