@@ -6,11 +6,13 @@
 # 3. Create a file like this one you're reading at `your-rails-app/.travis.yml`:
 
 language: ruby
+cache: bundler
+dist: trusty
 rvm:
   - 2.4.0
   # Add more Ruby versions to list if supported,
   # Travis supports these versions: http://rubies.travis-ci.org/
-  
+
 services:
   - postgresql
 
