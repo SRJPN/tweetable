@@ -1,4 +1,5 @@
-# Tweetable [![Build Status](https://travis-ci.org/SRJPN/tweetable.svg?branch=master)](https://travis-ci.org/SRJPN/tweetable) [![Coverage Status](https://coveralls.io/repos/github/SRJPN/tweetable/badge.svg?branch=master)](https://coveralls.io/github/SRJPN/tweetable?branch=master)
+# Tweetable 
+[![Build Status](https://travis-ci.org/SRJPN/tweetable.svg?branch=master)](https://travis-ci.org/SRJPN/tweetable) [![Coverage Status](https://coveralls.io/repos/github/SRJPN/tweetable/badge.svg?branch=master)](https://coveralls.io/github/SRJPN/tweetable?branch=master) [![Code Climate](https://codeclimate.com/github/SRJPN/tweetable/badges/gpa.svg)](https://codeclimate.com/github/SRJPN/tweetable)
 
 _Helping people to be concise, Precisely._
 
