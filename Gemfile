@@ -43,6 +43,9 @@ gem 'redcarpet' ,'~> 3.4.0'
 gem 'after_the_deadline'
 gem 'rufus-scheduler', '~> 3.2'
 
+# coverage
+gem 'coveralls', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rails-footnotes', '~> 4.0'

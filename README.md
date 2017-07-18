@@ -1,4 +1,4 @@
-# Tweetable [![Build Status](https://travis-ci.org/SRJPN/tweetable.svg?branch=master)](https://travis-ci.org/SRJPN/tweetable)
+# Tweetable [![Build Status](https://travis-ci.org/SRJPN/tweetable.svg?branch=master)](https://travis-ci.org/SRJPN/tweetable) [![Coverage Status](https://coveralls.io/repos/github/SRJPN/tweetable/badge.svg?branch=master)](https://coveralls.io/github/SRJPN/tweetable?branch=master)
 
 _Helping people to be concise, Precisely._
 

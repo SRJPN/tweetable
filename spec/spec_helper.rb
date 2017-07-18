@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'simplecov'
 require 'rails_helper'
 require 'helper'
-
-SimpleCov.start
+require 'coveralls'
+Coveralls.wear!
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
