@@ -107,7 +107,7 @@ describe ExercisesController do
       end
 
       it 'should not commence the exercise' do
-        past_time = Time.current - 1.days
+        past_time = Time.current - 1.day
         errors = double('Errors', messages: [['conclude_time', 'must be a future time']])
         exercise = double('Exercise', errors: errors)
 

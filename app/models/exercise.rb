@@ -7,7 +7,7 @@ class Exercise < ApplicationRecord
 
   validates_presence_of :task
 
-  belongs_to :task, :inverse_of => :exercises
+  belongs_to :task, inverse_of: :exercises
   accepts_nested_attributes_for :task
 
   has_one :exercise_config

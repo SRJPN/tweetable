@@ -60,7 +60,7 @@ module ExercisesHelper
   def evaluation_count(exercise_responses)
     exercise_responses.map do |response|
       tags = response.tags
-      !(tags.nil? || tags.empty?)
+      !tags.blank?
     end.count(true)
   end
 end

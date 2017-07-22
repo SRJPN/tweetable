@@ -13,47 +13,47 @@ describe ResponsesTracking do
 
   let(:exercises) do
     [
-        {
-            title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-        },
+      {
+        title: 'Climate Change', text: 'climate change exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+      },
 
-        {
-            title: 'Person', text: 'person exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-        },
-        {
-            title: 'Program', text: 'program exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-        },
-        {
-            title: 'Computer', text: 'computer exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
-        },
-        {
-            title: 'Human', text: 'human exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
-        }
+      {
+        title: 'Person', text: 'person exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+      },
+      {
+        title: 'Program', text: 'program exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+      },
+      {
+        title: 'Computer', text: 'computer exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '0'
+      },
+      {
+        title: 'Human', text: 'human exercise', commence_time: Time.current, conclude_time: (Time.current + 2.days), duration: '86400'
+      }
     ]
   end
 
   let(:users) do
     [
-        {
-            name: 'Kamal Hasan', admin: false, email: 'kamalhasan@email.com', auth_id: '132271', image_url: 'http://graph.facebook.com/demo1'
-        },
-        {
-            name: 'Vimal Hasan', admin: false, email: 'vimalhasan@email.com', auth_id: '132273', image_url: 'http://graph.facebook.com/demo1'
-        },
-        {
-            name: 'Rajanikanth', admin: false, email: 'rajinikanth@email.com', auth_id: '132272', image_url: 'http://graph.facebook.com/demo2'
-        }
+      {
+        name: 'Kamal Hasan', admin: false, email: 'kamalhasan@email.com', auth_id: '132271', image_url: 'http://graph.facebook.com/demo1'
+      },
+      {
+        name: 'Vimal Hasan', admin: false, email: 'vimalhasan@email.com', auth_id: '132273', image_url: 'http://graph.facebook.com/demo1'
+      },
+      {
+        name: 'Rajanikanth', admin: false, email: 'rajinikanth@email.com', auth_id: '132272', image_url: 'http://graph.facebook.com/demo2'
+      }
     ]
   end
 
   before(:each) do
     @users = User.create(users)
-    @exercises = exercises.map { |exercise|
+    @exercises = exercises.map do |exercise|
       task = Task.create(title: exercise[:title], text: exercise[:text])
       exercise_created = task.exercises.create
       ExerciseConfig.create(commence_time: exercise[:commence_time], conclude_time: exercise[:conclude_time], duration: exercise[:duration], exercise_id: exercise_created.id)
       exercise_created
-    }
+    end
   end
 
   after(:each) do
@@ -72,7 +72,7 @@ describe ResponsesTracking do
     end
     context 'when the candidate has started the test and not yet completed' do
       it 'should give remaining time from the time the test started' do
-        time = (Time.current - 0.5.day)
+        time = (Time.current - 0.5.days)
         ResponsesTracking.create(exercise_id: @exercises.first.id, user_id: @users.first.id, created_at: time, updated_at: time)
         expected_remaining_time = ResponsesTracking.remaining_time(@exercises.first.id, @users.first.id)
 
@@ -86,7 +86,7 @@ describe ResponsesTracking do
         expect(expected_remaining_time.round).to be(0)
       end
       it 'should give remaining time to conclude time if the exercise closing time is less than duration' do
-        time = (Time.current + 1.98.day)
+        time = (Time.current + 1.98.days)
         exercise = @exercises.second
         ResponsesTracking.create(exercise_id: exercise.id, user_id: @users.first.id, created_at: time, updated_at: time)
         expected_remaining_time = ResponsesTracking.remaining_time(exercise.id, @users.first.id)

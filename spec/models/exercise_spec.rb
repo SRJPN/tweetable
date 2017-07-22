@@ -16,7 +16,7 @@ describe Exercise, type: :model do
       Time.zone = 'Astana'
       task = Task.create(title: 'exercise title', text: 'exercise text')
       exercise = Exercise.create(task_id: task.id)
-      config = ExerciseConfig.create(duration: 86_400, exercise_id: exercise.id)
+      ExerciseConfig.create(duration: 86_400, exercise_id: exercise.id)
       now = Time.now.in_time_zone(ActiveSupport::TimeZone.new('Chennai'))
       exercise.commence(now.to_s)
       expect(exercise.conclude_time).to eq(Time.zone.parse(now.to_s))

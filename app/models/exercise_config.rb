@@ -21,7 +21,7 @@ class ExerciseConfig < ApplicationRecord
   end
 
   def valid_commence_time?
-    return true unless commence_time.present?
+    return true if commence_time.blank?
     valid_conclude_time?
   end
 

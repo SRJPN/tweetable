@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20170712140501) do
   enable_extension "plpgsql"
 
   create_table "exercise_configs", force: :cascade do |t|
-    t.string "exercise_id"
+    t.integer "exercise_id"
     t.datetime "commence_time"
     t.datetime "conclude_time"
     t.integer "duration"

@@ -7,6 +7,6 @@ class Tag < ApplicationRecord
     with: /\A#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})\Z/,
     message: 'code must be a valid hex color code'
   }
-
+  
   has_many :taggings, dependent: :destroy
 end

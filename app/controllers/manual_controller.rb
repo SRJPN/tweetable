@@ -10,12 +10,12 @@ class ManualController < ApplicationController
   private
 
   def admin_help
-    filename = "#{Rails.root}/docs/Manual.md"
+    filename = Rails.root.join('docs', 'Manual.md').to_s
     markup_content(filename)
   end
 
   def candidate_help
-    filename = "#{Rails.root}/docs/StudentManual.md"
+    filename = Rails.root.join('docs', 'StudentManual.md').to_s
     markup_content(filename)
   end
 
@@ -25,6 +25,6 @@ class ManualController < ApplicationController
     contents = File.read(filename)
     renderer = Redcarpet::Render::HTML.new(no_links: true, hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer)
-    @text = markdown.render(contents).html_safe
+    @text = markdown.render(contents)
   end
 end
